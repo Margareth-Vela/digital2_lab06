@@ -34,6 +34,9 @@
 #define Ld15 PE_3
 #define Ld16 PA_2
 
+const int P1 = 36;
+const int P2 = 37;
+
 // variables will change:
 int buttonState1 = 0;         // variable for reading the pushbutton status
 int buttonState2 = 0; 
@@ -66,6 +69,9 @@ void setup() {
   pinMode(Ld14, OUTPUT);
   pinMode(Ld15, OUTPUT);
   pinMode(Ld16, OUTPUT);
+
+  pinMode(P1,OUTPUT);
+  pinMode(P2,OUTPUT);
   
   pinMode(SW1, INPUT_PULLUP);
   pinMode(SW2, INPUT_PULLUP);
@@ -79,6 +85,8 @@ void loop() {
   // put your main code here, to run repeatedly: 
 
   if (flag == 1){
+    clean1();
+    clean2();
     digitalWrite(LED1, HIGH);
     delay(1000);
     digitalWrite(LED2, HIGH);
@@ -89,77 +97,123 @@ void loop() {
   }
   
   if(cont1 == 1){
-    digitalWrite(Ld1,HIGH);
-    digitalWrite(Ld8,LOW);}
+    clean1();
+    digitalWrite(Ld1, HIGH);
+    }
   else if(cont1 == 2){
-    digitalWrite(Ld2,HIGH);
-    digitalWrite(Ld1,LOW);}
+    clean1();
+    digitalWrite(Ld2, HIGH);
+    }
   else if(cont1 == 3){
-    digitalWrite(Ld3,HIGH);
-    digitalWrite(Ld2,LOW);}
+    clean1();
+    digitalWrite(Ld3, HIGH);
+    }
   else if(cont1 == 4){
-    digitalWrite(Ld4,HIGH);
-    digitalWrite(Ld3,LOW);}
+    clean1();
+    digitalWrite(Ld4, HIGH);
+    }
   else if(cont1 == 5){
-    digitalWrite(Ld5,HIGH);
-    digitalWrite(Ld4,LOW);}
+    clean1();
+    digitalWrite(Ld5, HIGH);
+    }
   else if(cont1 == 6){
-    digitalWrite(Ld6,HIGH);
-    digitalWrite(Ld5,LOW);}
+    clean1();
+    digitalWrite(Ld6, HIGH);
+    }
   else if(cont1 == 7){
-    digitalWrite(Ld7,HIGH);
-    digitalWrite(Ld6,LOW);}
+    clean1();
+    digitalWrite(Ld7, HIGH);
+    }
   else if(cont1 == 8){
-    digitalWrite(Ld8,HIGH);
-    digitalWrite(Ld7,LOW);}
+    clean1();
+    digitalWrite(Ld8, HIGH);
+    }
   else if(cont1 == 9){
-    if(LED3 == LOW){
-    digitalWrite(LED2, HIGH);}
-    cont1=0;}
+    clean1();
+    clean2();
+    digitalWrite(P1, HIGH);
+    flag = 3;
+  }
 
   if(cont2 == 1){
-    digitalWrite(Ld9,HIGH);
-    digitalWrite(Ld16,LOW);}
+    clean2();
+    digitalWrite(Ld9, HIGH);
+    }
   else if(cont2 == 2){
-    digitalWrite(Ld10,HIGH);
-    digitalWrite(Ld9,LOW);}
+    clean2();
+    digitalWrite(Ld10, HIGH);
+    }
   else if(cont2 == 3){
-    digitalWrite(Ld11,HIGH);
-    digitalWrite(Ld10,LOW);}
+    clean2();
+    digitalWrite(Ld11, HIGH);
+    }
   else if(cont2 == 4){
-    digitalWrite(Ld12,HIGH);
-    digitalWrite(Ld11,LOW);}
+    clean2();
+    digitalWrite(Ld12, HIGH);
+    }
   else if(cont2 == 5){
-    digitalWrite(Ld13,HIGH);
-    digitalWrite(Ld12,LOW);}
+    clean2();
+    digitalWrite(Ld13, HIGH);
+    }
   else if(cont2 == 6){
-    digitalWrite(Ld14,HIGH);
-    digitalWrite(Ld13,LOW);}
+    clean2();
+    digitalWrite(Ld14, HIGH);
+    }
   else if(cont2 == 7){
-    digitalWrite(Ld15,HIGH);
-    digitalWrite(Ld14,LOW);}
+    clean2();
+    digitalWrite(Ld15, HIGH);
+    }
   else if(cont2 == 8){
-    digitalWrite(Ld16,HIGH);
-    digitalWrite(Ld15,LOW);}
+    clean2();
+    digitalWrite(Ld16, HIGH);
+    }
   else if(cont2 == 9){
-    if(LED2 == LOW){
-    digitalWrite(LED3, HIGH);}
-    cont2=0;}
-  
+    clean1();
+    clean2();
+    digitalWrite(P2, HIGH);
+    flag = 3;
+}
 }
 
+void clean1(){
+          digitalWrite(Ld1, LOW);
+          digitalWrite(Ld2, LOW);
+          digitalWrite(Ld3, LOW);
+          digitalWrite(Ld4, LOW);
+          digitalWrite(Ld5, LOW);
+          digitalWrite(Ld6, LOW);
+          digitalWrite(Ld7, LOW);
+          digitalWrite(Ld8, LOW);
+}
+
+void clean2(){
+          digitalWrite(Ld9, LOW);
+          digitalWrite(Ld10, LOW);
+          digitalWrite(Ld11, LOW);
+          digitalWrite(Ld12, LOW);
+          digitalWrite(Ld13, LOW);
+          digitalWrite(Ld14, LOW);
+          digitalWrite(Ld15, LOW);
+          digitalWrite(Ld16, LOW);
+}
+
+
 void button1(){
-  if(flag != 2){
+  if(flag != 2 || flag != 3){
      flag = 1; 
     }
     if(flag == 2){
-      cont1++;}
+      cont1++;
+      delay(100);
+      }
 }
 
 void button2(){
-  if(flag != 2){
+  if(flag != 2 || flag != 3){
      flag = 1; 
     }
     if(flag == 2){
-      cont2++;}
+      cont2++;
+      delay(100);
+      }
 }
