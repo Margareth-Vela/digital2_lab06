@@ -41,6 +41,7 @@ int cont1 = 0;
 int cont2 = 0;
 
 int flag = 0;
+volatile byte state = LOW;
 
 void setup() {
   // put your setup code here, to run once:
@@ -68,28 +69,14 @@ void setup() {
   
   pinMode(SW1, INPUT_PULLUP);
   pinMode(SW2, INPUT_PULLUP);
+
+  attachInterrupt(digitalPinToInterrupt(SW1), button1, RISING);
+  attachInterrupt(digitalPinToInterrupt(SW2), button2, RISING);
+  
 }
 
 void loop() {
   // put your main code here, to run repeatedly: 
-  buttonState1 = digitalRead(SW1);
-  buttonState2 = digitalRead(SW2);
-  
-  if (buttonState1 == HIGH){
-    if(flag != 2){
-     flag = 1; 
-    }
-    if(flag == 2){
-      cont1++;}
-  }
-
-  if (buttonState2 == HIGH){
-    if(flag != 2){
-     flag = 1; 
-    }
-    if(flag == 2){
-      cont2++;}
-  }
 
   if (flag == 1){
     digitalWrite(LED1, HIGH);
@@ -159,4 +146,20 @@ void loop() {
     digitalWrite(LED3, HIGH);}
     cont2=0;}
   
+}
+
+void button1(){
+  if(flag != 2){
+     flag = 1; 
+    }
+    if(flag == 2){
+      cont1++;}
+}
+
+void button2(){
+  if(flag != 2){
+     flag = 1; 
+    }
+    if(flag == 2){
+      cont2++;}
 }
