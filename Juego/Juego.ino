@@ -38,11 +38,8 @@ const int P1 = 36;
 const int P2 = 37;
 
 // variables will change:
-int buttonState1 = 0;         // variable for reading the pushbutton status
-int buttonState2 = 0; 
 int cont1 = 0;
 int cont2 = 0;
-
 int flag = 0;
 volatile byte state = LOW;
 
@@ -89,10 +86,12 @@ void loop() {
     clean2();
     digitalWrite(LED1, HIGH);
     delay(1000);
-    digitalWrite(LED2, HIGH);
-    delay(1000);
     digitalWrite(LED3, HIGH);
     delay(1000);
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED3, HIGH);
+    delay(1000);
+    digitalWrite(LED3, LOW);
     flag = 2;
   }
   
@@ -127,11 +126,9 @@ void loop() {
   else if(cont1 == 8){
     clean1();
     digitalWrite(Ld8, HIGH);
-    }
-  else if(cont1 == 9){
-    clean1();
-    clean2();
     digitalWrite(P1, HIGH);
+    clean2();
+    digitalWrite(Ld8, LOW);
     flag = 3;
   }
 
@@ -166,11 +163,9 @@ void loop() {
   else if(cont2 == 8){
     clean2();
     digitalWrite(Ld16, HIGH);
-    }
-  else if(cont2 == 9){
-    clean1();
-    clean2();
     digitalWrite(P2, HIGH);
+    clean1();
+    digitalWrite(Ld16, LOW);
     flag = 3;
 }
 }
@@ -199,21 +194,21 @@ void clean2(){
 
 
 void button1(){
-  if(flag != 2 || flag != 3){
+  if(flag == 0){
      flag = 1; 
     }
-    if(flag == 2){
-      cont1++;
-      delay(100);
-      }
+  if(flag == 2){
+    cont1++;
+    delay(100);
+    }
 }
 
 void button2(){
-  if(flag != 2 || flag != 3){
+  if(flag == 0){
      flag = 1; 
     }
-    if(flag == 2){
-      cont2++;
-      delay(100);
+  if(flag == 2){
+    cont2++;
+    delay(100);
       }
 }
