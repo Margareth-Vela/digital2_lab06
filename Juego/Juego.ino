@@ -34,17 +34,18 @@
 #define Ld15 PE_3
 #define Ld16 PA_2
 
+//Leds ganadoras
 const int P1 = 36;
 const int P2 = 37;
 
-// variables will change:
+//Variables del programa
 int cont1 = 0;
 int cont2 = 0;
 int flag = 0;
 volatile byte state = LOW;
 
 void setup() {
-  // put your setup code here, to run once:
+ //Definir entradas y salidas
   pinMode(LED1,OUTPUT);
   pinMode(LED2,OUTPUT);
   pinMode(LED3,OUTPUT);
@@ -73,14 +74,15 @@ void setup() {
   pinMode(SW1, INPUT_PULLUP);
   pinMode(SW2, INPUT_PULLUP);
 
+  //Definir interrupciones
   attachInterrupt(digitalPinToInterrupt(SW1), button1, RISING);
   attachInterrupt(digitalPinToInterrupt(SW2), button2, RISING);
   
 }
 
 void loop() {
-  // put your main code here, to run repeatedly: 
 
+  //Bandera para que comience la secuencia del semáforo
   if (flag == 1){
     clean1();
     clean2();
@@ -94,7 +96,8 @@ void loop() {
     digitalWrite(LED3, LOW);
     flag = 2;
   }
-  
+
+  //Determina que led del jugador 1 debe prenderse
   if(cont1 == 1){
     clean1();
     digitalWrite(Ld1, HIGH);
@@ -124,14 +127,15 @@ void loop() {
     digitalWrite(Ld7, HIGH);
     }
   else if(cont1 == 8){
-    clean1();
+    clean1(); //Apagar las leds
     digitalWrite(Ld8, HIGH);
-    digitalWrite(P1, HIGH);
-    clean2();
+    digitalWrite(P1, HIGH); //Encender la led ganadora del jugador 1
+    clean2(); //Se apagan todas las leds
     digitalWrite(Ld8, LOW);
-    flag = 3;
+    flag = 3; //No se permite que ningún jugador siga incrementando el contador
   }
 
+  //Determina que led del jugador 2 debe prenderse
   if(cont2 == 1){
     clean2();
     digitalWrite(Ld9, HIGH);
@@ -161,16 +165,16 @@ void loop() {
     digitalWrite(Ld15, HIGH);
     }
   else if(cont2 == 8){
-    clean2();
-    digitalWrite(Ld16, HIGH);
-    digitalWrite(P2, HIGH);
-    clean1();
+    clean2(); //Apagar las leds
+    digitalWrite(Ld16, HIGH); 
+    digitalWrite(P2, HIGH); //Se enciende la led ganadora del jugador 2
+    clean1(); //Se apagan las demás leds
     digitalWrite(Ld16, LOW);
-    flag = 3;
+    flag = 3; //No se permite que ningún jugador siga incrementando el contador
 }
 }
 
-void clean1(){
+void clean1(){ //Rutina para apagar las leds del jugador 1
           digitalWrite(Ld1, LOW);
           digitalWrite(Ld2, LOW);
           digitalWrite(Ld3, LOW);
@@ -181,7 +185,7 @@ void clean1(){
           digitalWrite(Ld8, LOW);
 }
 
-void clean2(){
+void clean2(){ //Rutina para apagar las leds del jugador 2
           digitalWrite(Ld9, LOW);
           digitalWrite(Ld10, LOW);
           digitalWrite(Ld11, LOW);
@@ -193,22 +197,22 @@ void clean2(){
 }
 
 
-void button1(){
+void button1(){ //Rutina de interrupción para el jugador 1
   if(flag == 0){
-     flag = 1; 
+     flag = 1; //Se ejecuta la rutina del semáforo
     }
   if(flag == 2){
-    cont1++;
+    cont1++; //Se incrementa el contador 1
     delay(100);
     }
 }
 
-void button2(){
+void button2(){ //Rutina de interrupción para el jugador 2
   if(flag == 0){
-     flag = 1; 
+     flag = 1; //Se ejecuta la rutina del semáforo
     }
   if(flag == 2){
-    cont2++;
+    cont2++; //Se incrementa el contador 2
     delay(100);
       }
 }
